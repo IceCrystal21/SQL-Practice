@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from "cors";
+import db from "./database";
 
 const app = express();
 const PORT = 5000;
@@ -10,14 +11,21 @@ app.use(cors(
     }
 ))
 
-app.get("/app/users", (req, res) => {
-    const users = 
-        { 
-            id: 1, 
-            name: 'Alice',
-            note: "This is a test"
-        };
-    res.status(200).json(users);
+app.use(express.json())
+
+app.post("/app/add_user/", (req, res) => {
+    const { username, email, password } = req.body
+    db.query(`INSERT INTO users (USERNAME, EMAIL, PASSWORD)
+       VALUES (?, ?, ?)`,
+       [username, email, password],
+       (err, result) => {
+        
+        if (err) {
+            res.status(500).json({message: err.message})
+        }
+        res.status(201).json({message: "User created successfully!"})
+       }
+    )
 })
 
 app.listen(PORT , () => {

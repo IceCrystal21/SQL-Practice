@@ -1,0 +1,13 @@
+.form {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20vh 0;
+}
+
+.form input {
+    background-color: rgb(197, 197, 197);
+    margin: 5vh 30vw;
+    padding: 2vh;
+}
